@@ -25,7 +25,7 @@
 # Clone o repositório
 https://github.com/arielff3/gostack11-desafio-reactjs
 # Em seguida execute:
-$ cd bootcamp-desafio-conceitos-reactjs
+$ cd gostack11-desafio-reactjs
 $ yarn
 # Para iniciar a aplicação
 $ yarn start
