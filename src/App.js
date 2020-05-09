@@ -1,46 +1,54 @@
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
+import api from './services/api';
 
-import api from './services/api'
 import "./styles.css";
 
 function App() {
-
-  const [respositories, setRepoList] = useState([])
+  const [repositories, setRepositories] = useState([]);
 
   useEffect(() => {
-    const listRepositories = async () => {
-      const response = await api.get('/repositories')
-      console.log(response);
-      setRepoList(response.data);
-    }
-
-    listRepositories();
-  }, [respositories])
+    api.get('repositories').then(response => {
+      setRepositories(response.data);
+    })
+  },[]);
 
   async function handleAddRepository() {
-    await api.post('/repositories', {
-      title: "Desafio React",
+    const response = await api.post('repositories', {
+      title: "Repositório",
+      url: "https://github.com/arielff3/gostack11-desafio-reactjs",
+      techs: [
+        "Node.js",
+        "ReactJS"
+      ]
     });
+    const repository = response.data;
+
+    setRepositories([...repositories, repository]);
   }
 
   async function handleRemoveRepository(id) {
-    await api.delete(`/repositories/${id}`);
+    await api.delete(`repositories/${id}`);
+    const newRepositories = repositories.filter(
+      repository => repository.id !== id
+    );
+    setRepositories(newRepositories);
   }
-
 
   return (
     <div>
       <ul data-testid="repository-list">
-        {respositories.map(repo => 
-          <li key={repo.id}>
-          {repo.title}
-          <button onClick={() => handleRemoveRepository(repo.id)}>
-            Remover
-          </button>
-        </li>
-        )}
+        {repositories.map(repository => (
+          <li key={repository.id}>
+            {repository.title}
+              <button onClick={() => handleRemoveRepository(repository.id)}>
+                Remover
+              </button>
+          </li>
+        ))}
       </ul>
+
       <button onClick={handleAddRepository}>Adicionar</button>
+
     </div>
   );
 }
