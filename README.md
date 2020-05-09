@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src=".github/logo.png" alt="GoStack">
+  <img src=".github/readmeLogo.png" alt="GoStack">
 </h1>
 
 <h2 align="center">Desafio 03: Conceitos de ReactJS</h2>
